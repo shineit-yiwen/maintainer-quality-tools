@@ -201,13 +201,12 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
     # except subprocess.CalledProcessError:
     #     print("Using previous openerp_template database.")
     # else:
-        # unbuffer keeps output colors
-    print("world %s" % serve_path)
+    #     unbuffer keeps output colors
     cmd_odoo = ["unbuffer"] if unbuffer else []
-    cmd_odoo += ["%s/openerp-server" % serve_path,
+    cmd_odoo += ["%s/openerp-server" % server_path,
                      "-d", db,
-                     "--db_user=odoo",
-                     "--db_password=odoo",
+                    #  "--db_user=odoo",
+                    #  "--db_password=odoo",
                      "--log-level=info",
                      "--stop-after-init",
                      "--init", ','.join(preinstall_modules),
@@ -323,7 +322,6 @@ def main(argv=None):
     preinstall_modules = list(set(preinstall_modules) - set(get_modules(
         os.environ.get('TRAVIS_BUILD_DIR'))))
     print("Modules to preinstall: %s" % preinstall_modules)
-    print("hello: %s" % serve_path)
     setup_server(dbtemplate, odoo_unittest, tested_addons, server_path,
                  addons_path, install_options, preinstall_modules, unbuffer)
 
