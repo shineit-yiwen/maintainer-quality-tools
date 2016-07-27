@@ -193,24 +193,27 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
     :param addons_path: Addons path
     :param install_options: Install options (travis parameter)
     """
-    if preinstall_modules is None:
-        preinstall_modules = ['base']
-    print("\nCreating instance:")
-    try:
-        subprocess.check_call(["createdb", db])
-    except subprocess.CalledProcessError:
-        print("Using previous openerp_template database.")
-    else:
+    # if preinstall_modules is None:
+    #     preinstall_modules = ['base']
+    # print("\nCreating instance:")
+    # try:
+    #     subprocess.check_call(["createdb", db])
+    # except subprocess.CalledProcessError:
+    #     print("Using previous openerp_template database.")
+    # else:
         # unbuffer keeps output colors
-        cmd_odoo = ["unbuffer"] if unbuffer else []
-        cmd_odoo += ["%s/openerp-server" % server_path,
+    cmd_odoo = ["unbuffer"] if unbuffer else    ]
+    cmd_odoo += ["%s/openerp-server" % serve_path,
                      "-d", db,
+                     "--db_user=odoo",
+                     "--db_password=odoo",
                      "--log-level=info",
                      "--stop-after-init",
                      "--init", ','.join(preinstall_modules),
                      ] + install_options
-        print(" ".join(cmd_odoo))
-        subprocess.check_call(cmd_odoo)
+    
+    print(" ".join(cmd_odoo))
+    subprocess.check_call(cmd_odoo)
     return 0
 
 
