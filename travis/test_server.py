@@ -205,15 +205,15 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
     cmd_odoo = ["unbuffer"] if unbuffer else []
     cmd_odoo += ["%s/openerp-server" % server_path,
                      "-d", db,
-                    #  "--db_user=odoo",
-                    #  "--db_password=odoo",
+                     "--db_user=odoo",
+                     "--db_password=odoo",
                      "--log-level=info",
                      "--stop-after-init",
                      "--init", ','.join(preinstall_modules),
                      ] + install_options
     
     print(" ".join(cmd_odoo))
-    subprocess.check_call(cmd_odoo)
+    # subprocess.check_call(cmd_odoo)
     return 0
 
 
