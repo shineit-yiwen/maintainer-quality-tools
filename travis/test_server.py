@@ -202,7 +202,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
     #     print("Using previous openerp_template database.")
     # else:
         # unbuffer keeps output colors
-    cmd_odoo = ["unbuffer"] if unbuffer else    ]
+    cmd_odoo = ["unbuffer"] if unbuffer else []
     cmd_odoo += ["%s/openerp-server" % serve_path,
                      "-d", db,
                      "--db_user=odoo",
