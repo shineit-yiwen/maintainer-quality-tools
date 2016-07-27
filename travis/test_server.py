@@ -357,13 +357,14 @@ def main(argv=None):
     counted_errors = 0
     for to_test in to_test_list:
         print("\nTesting %s:" % to_test)
-        db_odoo_created = False
-        try:
-            db_odoo_created = subprocess.call(
-                ["createdb", "-T", dbtemplate, database])
-            copy_attachments(dbtemplate, database, data_dir)
-        except subprocess.CalledProcessError:
-            db_odoo_created = True
+        db_odoo_created = True
+        # db_odoo_created = False
+        # try:
+        #     db_odoo_created = subprocess.call(
+        #         ["createdb", "-T", dbtemplate, database])
+        #     copy_attachments(dbtemplate, database, data_dir)
+        # except subprocess.CalledProcessError:
+        #     db_odoo_created = True
         for command, check_loaded in commands:
             if db_odoo_created and instance_alive:
                 # If exists database of odoo test
