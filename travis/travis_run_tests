@@ -7,6 +7,7 @@ import os
 import subprocess
 import sys
 from travis_helpers import success_msg, fail_msg
+import traceback
 
 
 def main(test_list):
@@ -30,7 +31,7 @@ def main(test_list):
             try:
                 res = __import__(test_lib).main(argv=test_w_args)
             except Exception as e:
-                print(e)
+                print(traceback.format_exc())
                 res = 1
         else:
             res = subprocess.call(test_w_args)
