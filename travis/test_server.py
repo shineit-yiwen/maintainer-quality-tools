@@ -9,6 +9,7 @@ import subprocess
 import sys
 from getaddons import get_addons, get_modules, is_installable_module
 from travis_helpers import success_msg, fail_msg
+import shlex
 
 
 def has_test_errors(fname, dbname, odoo_version, check_loaded=True):
@@ -383,7 +384,7 @@ def main(argv=None):
                 # Run test command; unbuffer keeps output colors
                 command_call = (["unbuffer"] if unbuffer else []) + command
             print(' '.join(command_call))
-            pipe = subprocess.Popen(command_call,
+            pipe = subprocess.Popen(shlex.split(command_call),
                                     stderr=subprocess.STDOUT,
                                     stdout=subprocess.PIPE)
             with open('stdout.log', 'w') as stdout:
