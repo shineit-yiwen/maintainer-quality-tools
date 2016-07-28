@@ -214,6 +214,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
                      ] + install_options
     
     print(" ".join(cmd_odoo))
+    print(os.system('psql -l'))
     # subprocess.check_call(cmd_odoo)
     return 0
 
@@ -326,7 +327,7 @@ def main(argv=None):
     setup_server(dbtemplate, odoo_unittest, tested_addons, server_path,
                  addons_path, install_options, preinstall_modules, unbuffer)
                  
-    print(os.system('psql -l'))
+    
 
     # Running tests
     database = "openerp_test"
