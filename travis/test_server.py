@@ -325,6 +325,8 @@ def main(argv=None):
     print("Modules to preinstall: %s" % preinstall_modules)
     setup_server(dbtemplate, odoo_unittest, tested_addons, server_path,
                  addons_path, install_options, preinstall_modules, unbuffer)
+                 
+    print(os.system('psql -l'))
 
     # Running tests
     database = "openerp_test"
