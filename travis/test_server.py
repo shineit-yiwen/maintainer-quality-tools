@@ -9,7 +9,7 @@ import subprocess
 import sys
 from getaddons import get_addons, get_modules, is_installable_module
 from travis_helpers import success_msg, fail_msg
-# import shlex
+
 
 
 def has_test_errors(fname, dbname, odoo_version, check_loaded=True):
@@ -206,8 +206,8 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
     cmd_odoo = ["unbuffer"] if unbuffer else []
     cmd_odoo += ["%s/openerp-server" % server_path,
                      "-d", db,
-                     "--db_user=odoo",
-                     "--db_password=odoo",
+                    #  "--db_user=odoo",
+                    #  "--db_password=odoo",
                      "--log-level=info",
                      "--stop-after-init",
                      "--init", ','.join(preinstall_modules),
@@ -385,7 +385,6 @@ def main(argv=None):
                 command_call = (["unbuffer"] if unbuffer else []) + command
             print(' '.join(command_call))
             pipe = subprocess.Popen(command_call,
-                                    shell=True,
                                     stderr=subprocess.STDOUT,
                                     stdout=subprocess.PIPE)
             with open('stdout.log', 'w') as stdout:
