@@ -194,20 +194,20 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
     :param addons_path: Addons path
     :param install_options: Install options (travis parameter)
     """
-    # if preinstall_modules is None:
-    #     preinstall_modules = ['base']
-    # print("\nCreating instance:")
-    # try:
-    #     subprocess.check_call(["createdb", db])
-    # except subprocess.CalledProcessError:
-    #     print("Using previous openerp_template database.")
-    # else:
-    #     unbuffer keeps output colors
+    if preinstall_modules is None:
+        preinstall_modules = ['base']
+    print("\nCreating instance:")
+    try:
+        subprocess.check_call([os.system("psql -U odoo -h postgres -c 'create database {};' ".format(db))])
+    except subprocess.CalledProcessError:
+        print("Using previous openerp_template database.")
+    else:
+        unbuffer keeps output colors
     cmd_odoo = ["unbuffer"] if unbuffer else []
     cmd_odoo += ["%s/openerp-server" % server_path,
-                     "-d", db,
-                     "--db_user=odoo",
-                     "--db_password=odoo",
+                     "-d", 'openerp_template',
+                    #  "--db_user=odoo",
+                    #  "--db_password=odoo",
                      "--log-level=info",
                      "--stop-after-init",
                      "--init", ','.join(preinstall_modules),
@@ -365,7 +365,7 @@ def main(argv=None):
         db_odoo_created = False
         try:
             db_odoo_created = subprocess.call(
-                ["createdb", "-T", dbtemplate, database])
+                [os.system("psql -U odoo -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))])
             copy_attachments(dbtemplate, database, data_dir)
         except subprocess.CalledProcessError:
             db_odoo_created = True
