@@ -198,7 +198,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
         preinstall_modules = ['base']
     print("\nCreating instance:")
     os.system("psql -U odoo -h postgres -c 'create database {};' ".format(db))
-    print(os.system("psql -l")
+    print(os.system("psql -l"))
     # try:
     #     subprocess.check_call([os.system("psql -U odoo -h postgres -c 'create database {};' ".format(db))])
     # except subprocess.CalledProcessError:
