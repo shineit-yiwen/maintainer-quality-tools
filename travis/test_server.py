@@ -202,9 +202,9 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
     except subprocess.CalledProcessError:
         print("Using previous openerp_template database.")
     else:
-        unbuffer keeps output colors
-    cmd_odoo = ["unbuffer"] if unbuffer else []
-    cmd_odoo += ["%s/openerp-server" % server_path,
+        # unbuffer keeps output colors
+        cmd_odoo = ["unbuffer"] if unbuffer else []
+        cmd_odoo += ["%s/openerp-server" % server_path,
                      "-d", 'openerp_template',
                     #  "--db_user=odoo",
                     #  "--db_password=odoo",
@@ -213,9 +213,9 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
                      "--init", ','.join(preinstall_modules),
                      ] + install_options
     
-    print(" ".join(cmd_odoo))
-    print(os.system('psql -l'))
-    # subprocess.check_call(cmd_odoo)
+        print(" ".join(cmd_odoo))
+    # print(os.system('psql -l'))
+        subprocess.check_call(cmd_odoo)
     return 0
 
 
