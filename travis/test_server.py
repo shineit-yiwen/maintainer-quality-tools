@@ -198,7 +198,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
         preinstall_modules = ['base']
     print("\nCreating instance:")
     os.system("psql -U odoo -h postgres -c 'create database {};' ".format(db))
-    print(os.system("psql -l"))
+    print(os.system("psql -U odoo -l"))
     # try:
     #     subprocess.check_call([os.system("psql -U odoo -h postgres -c 'create database {};' ".format(db))])
     # except subprocess.CalledProcessError:
@@ -365,12 +365,14 @@ def main(argv=None):
         print("\nTesting %s:" % to_test)
         # db_odoo_created = True
         db_odoo_created = False
-        try:
-            db_odoo_created = subprocess.call(
-                [os.system("psql -U odoo -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))])
-            copy_attachments(dbtemplate, database, data_dir)
-        except subprocess.CalledProcessError:
-            db_odoo_created = True
+        db_odoo_created = os.system("psql -U odoo -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))
+        print(os.system("psql -U odoo -l"))
+        # try:
+        #     db_odoo_created = subprocess.call(
+        #         [os.system("psql -U odoo -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))])
+        #     copy_attachments(dbtemplate, database, data_dir)
+        # except subprocess.CalledProcessError:
+        #     db_odoo_created = True
         for command, check_loaded in commands:
             if db_odoo_created and instance_alive:
                 # If exists database of odoo test
