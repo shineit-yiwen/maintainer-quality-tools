@@ -197,26 +197,28 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
     if preinstall_modules is None:
         preinstall_modules = ['base']
     print("\nCreating instance:")
-    try:
-        subprocess.check_call([os.system("psql -U odoo -h postgres -c 'create database {};' ".format(db))])
-    except subprocess.CalledProcessError:
-        print("Using previous openerp_template database.")
-    else:
+    print(os.system("psql -U odoo -h postgres -c 'create database {};' ".format(db)))
+    print(os.system("psql -l")
+    # try:
+    #     subprocess.check_call([os.system("psql -U odoo -h postgres -c 'create database {};' ".format(db))])
+    # except subprocess.CalledProcessError:
+    #     print("Using previous openerp_template database.")
+    # else:
         # unbuffer keeps output colors
-        cmd_odoo = ["unbuffer"] if unbuffer else []
-        cmd_odoo += ["%s/openerp-server" % server_path,
-                     "-d", 'openerp_template',
-                    #  "--db_user=odoo",
-                    #  "--db_password=odoo",
-                     "--log-level=info",
-                     "--stop-after-init",
-                     "--init", ','.join(preinstall_modules),
-                     ] + install_options
+    cmd_odoo = ["unbuffer"] if unbuffer else []
+    cmd_odoo += ["%s/openerp-server" % server_path,
+                 "-d", 'openerp_template',
+                #  "--db_user=odoo",
+                #  "--db_password=odoo",
+                 "--log-level=info",
+                 "--stop-after-init",
+                 "--init", ','.join(preinstall_modules),
+                 ] + install_options
     
-        print(" ".join(cmd_odoo))
+    print(" ".join(cmd_odoo))
     # print(os.system('psql -l'))
-        subprocess.check_call(cmd_odoo)
-    return 0
+    # subprocess.check_call(cmd_odoo)
+    # return 0
 
 
 def run_from_env_var(env_name_startswith, environ):
