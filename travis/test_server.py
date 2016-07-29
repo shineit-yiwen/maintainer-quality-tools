@@ -364,13 +364,13 @@ def main(argv=None):
     for to_test in to_test_list:
         print("\nTesting %s:" % to_test)
         db_odoo_created = False
-        # db_odoo_created = os.system("psql -U odoo -W odoo -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))
-        try:
-            db_odoo_created = subprocess.call(
-                [os.system("psql -U odoo -W odoo -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))])
-            copy_attachments(dbtemplate, database, data_dir)
-        except subprocess.CalledProcessError:
-            db_odoo_created = True
+        db_odoo_created = os.system("psql -U odoo -W odoo -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))
+        # try:
+        #     db_odoo_created = subprocess.call(
+        #         [os.system("psql -U odoo -W odoo -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))])
+        #     copy_attachments(dbtemplate, database, data_dir)
+        # except subprocess.CalledProcessError:
+        #     db_odoo_created = True
         for command, check_loaded in commands:
             if db_odoo_created and instance_alive:
                 # If exists database of odoo test
