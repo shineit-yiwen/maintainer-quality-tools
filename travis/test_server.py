@@ -198,7 +198,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
         preinstall_modules = ['base']
     print("\nCreating instance:")
     try:
-        subprocess.check_call('createdb -e 'odoo\nodoo\n' | passwd odoo -U odoo -p 5432 -h postgres {}'.format(db),shell=True)
+        subprocess.check_call('createdb -U odoo -W odoo -p 5432 -h postgres {}'.format(db),shell=True)
     except subprocess.CalledProcessError:
         print("Using previous openerp_template database.")
     else:
