@@ -331,7 +331,7 @@ def main(argv=None):
     
 
     # Running tests
-    database = "openerp_test_test"
+    database = "openerp_test"
 
     cmd_odoo_test = ["coverage", "run",
                      "%s/openerp-server" % server_path,
