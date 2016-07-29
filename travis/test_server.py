@@ -319,7 +319,7 @@ def main(argv=None):
     else:
         print("Modules to test: %s" % tested_addons)
     # setup the base module without running the tests
-    dbtemplate = "openerp_template"
+    dbtemplate = "openerp_template1"
     preinstall_modules = get_test_dependencies(addons_path,
                                                tested_addons_list)
     preinstall_modules = list(set(preinstall_modules) - set(get_modules(
