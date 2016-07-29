@@ -198,7 +198,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
         preinstall_modules = ['base']
     print("\nCreating instance:")
     try:
-        subprocess.check_call('createdb -U odoo -p 5432 -h 127.0.0.1 {}'.format(db),shell=True)
+        subprocess.check_call('createdb -U odoo -p 5432 -h postgres {}'.format(db),shell=True)
     except subprocess.CalledProcessError:
         print("Using previous openerp_template database.")
     else:
@@ -206,7 +206,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
         cmd_odoo = ["unbuffer"] if unbuffer else []
         cmd_odoo += ["%s/openerp-server" % server_path,
                      "-d", '%s' % db,
-                     "--db_host=127.0.0.1",
+                     "--db_host=postgres",
                      "--db_user=odoo",
                      "--db_password=odoo",
                      "--db_port=5432",
@@ -336,7 +336,7 @@ def main(argv=None):
     cmd_odoo_test = ["coverage", "run",
                      "%s/openerp-server" % server_path,
                      "-d", database,
-                     "--db_host=127.0.0.1",
+                     "--db_host=postgres",
                      "--db_user=odoo",
                      "--db_password=odoo",
                      "--db_port=5432",
@@ -352,7 +352,7 @@ def main(argv=None):
         to_test_list = tested_addons_list
         cmd_odoo_install = ["%s/openerp-server" % server_path,
                             "-d", database,
-                            "--db_host=127.0.0.1",
+                            "--db_host=postgres",
                             "--db_user=odoo",
                             "--db_password=odoo",
                             "--db_port=5432",
@@ -421,7 +421,7 @@ def main(argv=None):
                 print(fail_msg, "Found %d lines with errors" % errors)
         if not instance_alive:
             # Don't drop the database if will be used later.
-            subprocess.call("dropdb -h 127.0.0.1 -U odoo -p 5432 {}".format(database), shell=True)
+            subprocess.call("dropdb -h postgres -U odoo -p 5432 {}".format(database), shell=True)
 
     print('Module test summary')
     for to_test in to_test_list:
