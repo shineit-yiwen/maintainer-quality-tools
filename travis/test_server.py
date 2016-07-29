@@ -216,7 +216,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
                      ] + install_options
     
         print(" ".join(cmd_odoo))
-        subprocess.check_call(cmd_odoo,shell=True)
+        # subprocess.check_call(cmd_odoo,shell=True)
     return 0
 
 
