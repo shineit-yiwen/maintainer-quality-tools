@@ -373,7 +373,7 @@ def main(argv=None):
         db_odoo_created = False
         # db_odoo_created = os.system("psql -U odoo -w -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))
         try:
-            db_odoo_created = subprocess.call("createdb -T {} {}".format(dbtemplate, database),shell=True)
+            db_odoo_created = subprocess.call("createdb -U odoo -h postgres -p 5432 -T {} {}".format(dbtemplate, database),shell=True)
             copy_attachments(dbtemplate, database, data_dir)
         except subprocess.CalledProcessError:
             db_odoo_created = True
