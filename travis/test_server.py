@@ -217,7 +217,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
                      ] + install_options
     
         print(" ".join(cmd_odoo))
-        # subprocess.check_call(cmd_odoo,shell=True)
+        subprocess.check_call(cmd_odoo,shell=True)
     return 0
 
 
@@ -374,9 +374,10 @@ def main(argv=None):
         db_odoo_created = False
         # db_odoo_created = os.system("psql -U odoo -w -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))
         try:
-            # subprocess.call("dropdb -h postgres -U odoo -p 5432 {}".format(database), shell=True)
             print(os.system("psql -U odoo -h postgres -p 5432 -l"))
+             subprocess.call("dropdb -h postgres -U odoo -p 5432 {}".format(database), shell=True)
             db_odoo_created = subprocess.call("createdb -U odoo -h postgres -p 5432 -T {} {}".format(dbtemplate, database),shell=True)
+            print(os.system("psql -U odoo -h postgres -p 5432 -l"))
             copy_attachments(dbtemplate, database, data_dir)
         except subprocess.CalledProcessError:
             db_odoo_created = True
