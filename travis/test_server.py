@@ -374,6 +374,7 @@ def main(argv=None):
         db_odoo_created = False
         # db_odoo_created = os.system("psql -U odoo -w -h postgres -c 'create database {} TEMPLATE={};' ".format(database,dbtemplate))
         try:
+            subprocess.call("dropdb -h postgres -U odoo -p 5432 {}".format(database), shell=True)
             print(os.system("psql -U odoo -h postgres -p 5432 -l"))
             db_odoo_created = subprocess.call("createdb -U odoo -h postgres -p 5432 -T {} {}".format(dbtemplate, database),shell=True)
             copy_attachments(dbtemplate, database, data_dir)
