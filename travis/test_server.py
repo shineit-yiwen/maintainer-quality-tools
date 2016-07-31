@@ -378,7 +378,7 @@ def main(argv=None):
             # subprocess.call("dropdb -h postgres -U odoo -p 5432 {}".format(database), shell=True)
             db_odoo_created = subprocess.call("createdb -U odoo -h postgres -p 5432 -T {} {}".format(dbtemplate, database),shell=True)
             # print(os.system("psql -U odoo -h postgres -p 5432 -l"))
-            copy_attachments(dbtemplate, database, data_dir)
+            # copy_attachments(dbtemplate, database, data_dir)
         except subprocess.CalledProcessError:
             db_odoo_created = True
         for command, check_loaded in commands:
