@@ -375,6 +375,7 @@ def main(argv=None):
         try:
             db_odoo_created = subprocess.call("createdb -U odoo -h postgres -p 5432 -T {} {}".format(dbtemplate, database),shell=True)
             print(os.system("psql -U odoo -h postgres -p 5432 -l"))
+            print('heloooooooooooo')
             copy_attachments(dbtemplate, database, data_dir)
             print('bingoo, after copy_attachments')
         except subprocess.CalledProcessError:
