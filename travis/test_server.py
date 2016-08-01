@@ -198,7 +198,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
         preinstall_modules = ['base']
     print("\nCreating instance:")
     try:
-        subprocess.check_call('createdb -U odoo -p 5432 -h postgres {}'.format(db),shell=True)
+        subprocess.check_call(["createdb","-U","odoo","-p", "5432", "-h", "postgres", db])
         print('before psql, ssssssssss')
         print(os.system("psql -U odoo -h postgres -p 5432 -l"))
         print('after psql, ttttttttttt')
@@ -208,7 +208,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
         # unbuffer keeps output colors
         cmd_odoo = ["unbuffer"] if unbuffer else []
         cmd_odoo += ["%s/openerp-server" % server_path,
-                     "-d", '%s' % db,
+                     "-d", db,
                      "--db_host=postgres",
                      "--db_user=odoo",
                      "--db_password=odoo",
@@ -219,7 +219,7 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
                      ] + install_options
     
         print(" ".join(cmd_odoo))
-        subprocess.check_call(cmd_odoo,shell=True)
+        subprocess.check_call(cmd_odoo)
     return 0
 
 
@@ -375,7 +375,7 @@ def main(argv=None):
         print("\nTesting %s:" % to_test)
         db_odoo_created = False
         try:
-            db_odoo_created = subprocess.call("createdb -U odoo -h postgres -p 5432 -T {} {}".format(dbtemplate, database),shell=True)
+            db_odoo_created = subprocess.call(["createdb", "-U", "odoo", "-h", "postgres", "-p", "5432", "-T", dbtemplate, database])
             print(os.system("psql -U odoo -h postgres -p 5432 -l"))
             print('heloooooooooooo')
             copy_attachments(dbtemplate, database, data_dir)
@@ -405,7 +405,6 @@ def main(argv=None):
                 command_call = (["unbuffer"] if unbuffer else []) + command
             print(' '.join(command_call))
             pipe = subprocess.Popen(command_call,
-                                    shell=True,
                                     stderr=subprocess.STDOUT,
                                     stdout=subprocess.PIPE)
             with open('stdout.log', 'w') as stdout:
@@ -430,7 +429,7 @@ def main(argv=None):
                 print(fail_msg, "Found %d lines with errors" % errors)
         if not instance_alive:
             # Don't drop the database if will be used later.
-            subprocess.call("dropdb -h postgres -U odoo -p 5432 {}".format(database), shell=True)
+            subprocess.call(["dropdb", "-h", "postgres", "-U", "odoo", "-p", "5432", database])
 
     print('Module test summary')
     for to_test in to_test_list:
