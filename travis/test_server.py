@@ -181,7 +181,8 @@ def get_test_dependencies(addons_path, addons_list):
 
 
 def setup_server(db, odoo_unittest, tested_addons, server_path,
-                 addons_path, install_options, preinstall_modules=None):
+                 addons_path, install_options, preinstall_modules=None,
+                 unbuffer=True):
     """
     Setup the base module before running the tests
     if the database template exists then will be used.
@@ -205,8 +206,8 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
         print("Using previous openerp_template database.")
     else:
         # unbuffer keeps output colors
-        # cmd_odoo = ["unbuffer"] if unbuffer else []
-        cmd_odoo = ["%s/openerp-server" % server_path,
+        cmd_odoo = ["unbuffer"] if unbuffer else []
+        cmd_odoo += ["%s/openerp-server" % server_path,
                      "-d", db,
                      "--db_host=postgres",
                      "--db_user=odoo",
@@ -279,7 +280,7 @@ def main(argv=None):
     expected_errors = int(os.environ.get("SERVER_EXPECTED_ERRORS", "0"))
     odoo_version = os.environ.get("VERSION")
     instance_alive = str2bool(os.environ.get('INSTANCE_ALIVE'))
-    # unbuffer = str2bool(os.environ.get('UNBUFFER', True))
+    unbuffer = str2bool(os.environ.get('UNBUFFER', True))
     data_dir = os.environ.get("DATA_DIR", '~/data_dir')
     if not odoo_version:
         # For backward compatibility, take version from parameter
@@ -328,7 +329,7 @@ def main(argv=None):
         os.environ.get('TRAVIS_BUILD_DIR'))))
     print("Modules to preinstall: %s" % preinstall_modules)
     setup_server(dbtemplate, odoo_unittest, tested_addons, server_path,
-                 addons_path, install_options, preinstall_modules)
+                 addons_path, install_options, preinstall_modules, unbuffer)
                  
     
 
@@ -401,7 +402,7 @@ def main(argv=None):
                 print('in else')
                 command[-1] = to_test
                 # Run test command; unbuffer keeps output colors
-                command_call = command
+                command_call = (["unbuffer"] if unbuffer else []) + command
             print(' '.join(command_call))
             pipe = subprocess.Popen(command_call,
                                     stderr=subprocess.STDOUT,
