@@ -23,7 +23,7 @@ def main(test_list):
     results = []
     for test in test_list:
         # keep backward compatibility with version as an argument
-        print("++======== Testing %s ========++" % test[0])
+        print("++======== Testing %s ========++" % test[0], flush=True)
         test_w_args = test + args
         test_file = test_w_args[0]
         if test_file.endswith(".py"):
