@@ -10,7 +10,6 @@ root_dir = os.path.dirname(os.path.abspath(__file__))
 flake8_config_dir = os.path.join(root_dir, 'cfg')
 
 status = 0
-os.system("cd $CI_PROJECT_NAME")
 
 for addon in get_modules(os.path.abspath('.')):
     status += subprocess.call(['flake8', addon,
