@@ -23,20 +23,7 @@ def main(test_list):
     results = []
     for test in test_list:
         # keep backward compatibility with version as an argument
-        print("++======== Testing %s ========++" % test[0], flush=True)
-        test_w_args = test + args
-        test_file = test_w_args[0]
-        if test_file.endswith(".py"):
-            test_lib = test_file[:-3]
-            try:
-                res = __import__(test_lib).main(argv=test_w_args)
-            except Exception as e:
-                print(traceback.format_exc())
-                res = 1
-        else:
-            res = subprocess.call(test_w_args)
-            print("========== Testing %s =============" % test[0])
-        results.append(res)
+        print("++======== Testing %s ========++" % test[0])
 
     print()
     print("+" + "="*39)
