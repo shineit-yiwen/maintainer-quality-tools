@@ -377,16 +377,11 @@ def main(argv=None):
         try:
             db_odoo_created = subprocess.call(["createdb", "-U", "odoo", "-h", "postgres", "-p", "5432", "-T", dbtemplate, database])
             print(os.system("psql -U odoo -h postgres -p 5432 -l"))
-            print('heloooooooooooo')
             copy_attachments(dbtemplate, database, data_dir)
-            print('bingoo, after copy_attachments')
         except subprocess.CalledProcessError:
             db_odoo_created = True
-            print('aho, in excption')
         for command, check_loaded in commands:
-            print('in for loop')
             if db_odoo_created and instance_alive:
-                print('in if')
                 # If exists database of odoo test
                 # then start server with regular command without tests params
                 rm_items = [
