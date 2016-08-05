@@ -199,9 +199,6 @@ def setup_server(db, odoo_unittest, tested_addons, server_path,
     print("\nCreating instance:")
     try:
         subprocess.check_call(["createdb","-U","odoo","-p", "5432", "-h", "postgres", db])
-        # print('before psql, ssssssssss')
-        print(os.system("psql -U odoo -h postgres -p 5432 -l"))
-        # print('after psql, ttttttttttt')
     except subprocess.CalledProcessError:
         print("Using previous openerp_template database.")
     else:
